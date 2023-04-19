@@ -1,6 +1,7 @@
 package telran.multithread.game;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Game {
@@ -19,11 +20,12 @@ public class Game {
 
 	public void makeThreads() {
 		for (int i = 0; i < nThreads; i++) {
-			threads.put(i + 1, new Racer(race, distance, ("Thread " + (i+1))));
+			threads.put(i + 1, new Racer(race, distance, ("Thread: " + (i + 1))));
 		}
 	}
 
 	public void start() throws InterruptedException {
+		race.start();
 		for (int i = 1; i <= nThreads; i++) {
 			Racer printer = threads.get(i);
 			printer.start();
@@ -32,11 +34,9 @@ public class Game {
 		for (int i = 1; i <= nThreads; i++) {
 			Racer printer = threads.get(i);
 			printer.join();
-			
 		}
-		
-		System.out.println("Winner is " + race.getWinner());
 
+		List<String> places = race.getParticipants();
+		places.forEach(System.out::println);
 	}
-
 }
