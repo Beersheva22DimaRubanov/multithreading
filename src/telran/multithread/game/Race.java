@@ -1,26 +1,40 @@
 package telran.multithread.game;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Race {
-	private List<String> participants = new ArrayList<>();
-	private Instant start;
-	private int id = 1;
-
-	public void start() {
-		start = Instant.now();
+	private int distance;
+	private int minSleep;
+	private int maxSleep;
+	private ArrayList<Runner> resultsTable;
+	private Instant startTime;
+	public Lock lock = new ReentrantLock(true);
+	
+	
+	public ArrayList<Runner> getResultsTable() {
+		return resultsTable;
 	}
-
-	synchronized public void addParticipant(String name) {
-			String res = String.format("Place: %d, %s, time: %d", id++, name,
-					ChronoUnit.MILLIS.between(start, Instant.now()));
-			participants.add(res);
+	public Instant getStartTime() {
+		return startTime;
 	}
-
-	public List<String> getParticipants() {
-		return participants;
+	public Race(int distance, int minSleep, int maxSleep, ArrayList<Runner> resultsTable, Instant startTime) {
+		this.distance = distance;
+		this.minSleep = minSleep;
+		this.maxSleep = maxSleep;
+		this.resultsTable = resultsTable;
+		this.startTime = startTime;
+	}
+	
+	public int getDistance() {
+		return distance;
+	}
+	public int getMinSleep() {
+		return minSleep;
+	}
+	public int getMaxSleep() {
+		return maxSleep;
 	}
 }
