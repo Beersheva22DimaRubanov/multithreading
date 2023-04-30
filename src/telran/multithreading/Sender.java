@@ -12,10 +12,10 @@ public class Sender extends Thread {
 	@Override
 	public void run() {
 		for (int i = 1; i <= nMessages; i++) {
-			messageBox.put("message" + i);
 			try {
-				sleep(10);
+				messageBox.put("message" + i);
 			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
